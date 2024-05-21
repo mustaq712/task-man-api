@@ -11,6 +11,7 @@ router.post('/register', async (req, res) => {
     const { fullname, username, password } = req.body;
   
     try {
+      console.log('Handling POST request');
       let user = await User.findOne({ username });
       if (user) {
         return res.status(400).json({ msg: 'Username already taken' });
@@ -20,8 +21,9 @@ router.post('/register', async (req, res) => {
       
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
-  
+      
       await user.save();
+      console.log('Processing complete');
       res.status(201).json({ msg: 'User registered successfully' });
     } catch (err) {
       console.error(err.message);
