@@ -43,21 +43,7 @@ router.get('/', auth, async (req, res) => {
   router.get('/test',  async (req, res) => {
     try {
       // Extract user ID from the request object (added by authMiddleware)
-      const userId = req.user.id;
-  
-      const { completed, search } = req.query;
-      let query = { userId }; // Filter tasks by user ID
-  
-      if (completed !== undefined) {
-        query.completed = completed === 'true';
-      }
-  
-      if (search) {
-        query.name = { $regex: search, $options: 'i' };
-      }
-  
-      const tasks = await Task.find(query);
-      res.json(tasks);
+       res.send("inside tasks")
     } catch (err) {
       res.status(500).json({ msg: 'Server error' });
     }
